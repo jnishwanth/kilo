@@ -53,13 +53,17 @@ char editorReadKey() {
     return c;
 }
 
+void editorRefreshScreen() {
+    write(STDIN_FILENO, "\x1b[2J", 4);
+}
+
 /*** input ***/
 
 void editorProcessKeypress() {
     char c = editorReadKey();
 
     switch (c) {
-        case CTRL_KEY('q'):
+        case CTRL_KEY('u'):
             exit(0);
             break;
     }
@@ -72,6 +76,7 @@ int main() {
 
     //read chars 1 by 1, read returns 1 if there is a character, 'q' to quit
     while (1) {
+        editorRefreshScreen();
         editorProcessKeypress();
     }
 
